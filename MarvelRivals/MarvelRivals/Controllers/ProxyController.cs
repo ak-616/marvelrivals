@@ -1,12 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MarvelRivals.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MarvelRivals.Controllers
 {
-    public class ProxyController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProxyController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly ExternalAPIService _service;
+
+        public ProxyController(ExternalAPIService service)
         {
-            return View();
+            _service = service;
+        }
+
+        [HttpGet("heroes")]
+        public async Task<IActionResult> GetHeroes()
+        {
+            var names = await _service.GetHeroNamesAsync();
+            return Ok(names);
         }
     }
 }

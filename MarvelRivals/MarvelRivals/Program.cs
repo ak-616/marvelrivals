@@ -1,4 +1,6 @@
 
+using MarvelRivals.Services;
+
 namespace MarvelRivals
 {
     public class Program
@@ -13,6 +15,7 @@ namespace MarvelRivals
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient<ExternalAPIService>();
 
             var app = builder.Build();
 
@@ -27,7 +30,7 @@ namespace MarvelRivals
 
             app.UseAuthorization();
 
-
+            app.UseStaticFiles();
             app.MapControllers();
 
             app.Run();
